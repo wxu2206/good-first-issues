@@ -130,7 +130,11 @@ class TestIssueManager:
 
         assert len(result) == 1
         assert result[0]["title"] == "Test Issue"
-        mock_api_instance.make_request.assert_called_once()
+        mock_api_instance.make_request.assert_called_once_with(
+            'https://api.github.com/search/issues?q=user:test_user+'
+            'label:"good first issue"+state:open+is:issue+no:assignee&per_page=100',
+            mock_api_instance,
+        )
 
     @patch('app.core.api_handler.APIClient')
     def test_extract_issues_by_user_error(self, mock_api_client):
@@ -351,4 +355,3 @@ class TestConfig:
         from app.core.config import get_template_path
         result = get_template_path()
         assert "templates" in result
-
