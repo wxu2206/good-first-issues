@@ -18,15 +18,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Generate good first issues CSV
-        uses: drkrillo/good-first-issues@main
+        uses: ./
         with:
           usernames: ${{ secrets.USERNAMES }}
-          github-token: ${{ secrets.ACCESS_TOKEN }}
+          github-token: ${{ github.token }}
           output-path: good_first_issues.csv
 
       - name: Render README
@@ -35,7 +33,7 @@ jobs:
             --input good_first_issues.csv
 
       - name: Upload CSV artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: good-first-issues
           path: good_first_issues.csv
