@@ -32,7 +32,7 @@ Add the following step to any workflow file:
 
 ```yaml
 - name: Fetch good first issues
-  uses: drkrillo/good-first-issues@main
+  uses: wxu2206/good-first-issues@3bc3e3bb8c6902ef3cf4fe2868ab2f1b35b04956
   with:
     usernames: "owner1,owner2,owner3"
     github-token: ${{ secrets.GITHUB_TOKEN }}

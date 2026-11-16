@@ -39,7 +39,7 @@ venv\\Scripts\\activate
 Install the required Python packages using:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements-lock.txt
 ```
 
 ## 4. Create the `.env` file

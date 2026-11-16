@@ -21,7 +21,7 @@ jobs:
   fetch-issues:
     runs-on: ubuntu-latest
     steps:
-      - uses: drkrillo/good-first-issues@main
+      - uses: wxu2206/good-first-issues@3bc3e3bb8c6902ef3cf4fe2868ab2f1b35b04956
         with:
           usernames: "pytorch,fastapi" # user/org to gather issues from
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -92,12 +92,12 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - uses: drkrillo/good-first-issues@main
+      - uses: wxu2206/good-first-issues@3bc3e3bb8c6902ef3cf4fe2868ab2f1b35b04956
         with:
           usernames: "pytorch,canonical"
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: good-first-issues
           path: good_first_issues.csv
@@ -106,7 +106,7 @@ jobs:
 ### JSON output
 
 ```yaml
-      - uses: drkrillo/good-first-issues@main
+      - uses: wxu2206/good-first-issues@3bc3e3bb8c6902ef3cf4fe2868ab2f1b35b04956
         with:
           usernames: "fastapi,django"
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -116,7 +116,7 @@ jobs:
 
 ### Auto-update a README with the results
 
-This is how this repository uses the action. The workflow fetches issues, renders them into a README using a Jinja2 template, and commits the result:
+The repository workflow uses the checked-out local action (`uses: ./`) with its job-scoped GitHub token. The example below pins the same reviewed action source to an immutable commit, renders a README using a Jinja2 template, and commits the result:
 
 ```yaml
 name: Update Good First Issues
@@ -136,12 +136,12 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: drkrillo/good-first-issues@main
+      - uses: wxu2206/good-first-issues@3bc3e3bb8c6902ef3cf4fe2868ab2f1b35b04956
         with:
           usernames: ${{ secrets.USERNAMES }}
-          github-token: ${{ secrets.ACCESS_TOKEN }}
+          github-token: ${{ github.token }}
           output-path: good_first_issues.csv
 
       - name: Render README
@@ -161,7 +161,7 @@ jobs:
 The action requires a GitHub token to access the GitHub API.
 
 - **`secrets.GITHUB_TOKEN`** — The default token provided by GitHub Actions. Works for public repositories. No setup needed.
-- **Personal Access Token** — Required if you need higher rate limits or access to specific data. Create one with the `public_repo` scope under [Settings > Developer settings > Personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).
+- **Personal Access Token**: The repository updater no longer requires `ACCESS_TOKEN`. Review any existing token separately before revoking it, since other integrations may still use it.
 
 ## Rate Limits
 
